@@ -14,13 +14,16 @@ public class Program {
         Scanner scanner = new Scanner(System.in);
         String searchName = scanner.nextLine();
 
-        List<Person> matchingPeople = new ArrayList<>();
+        /*List<Person> matchingPeople = new ArrayList<>();
         for (Person person : people) {
             if (person.getFirstName().equalsIgnoreCase(searchName) ||
                     person.getLastName().equalsIgnoreCase(searchName)) {
                 matchingPeople.add(person);
             }
-        }
+        }*/
+
+        List<Person> matchingPeople = people.stream().filter(person -> person.getFirstName().equalsIgnoreCase(searchName) ||
+                person.getLastName().equalsIgnoreCase(searchName)).toList();
 
         System.out.println("People with matching name:");
         for (Person person : matchingPeople) {
@@ -56,30 +59,35 @@ public class Program {
     }
 
     private static double calculateAverageAge(List<Person> people) {
-        int totalAge = 0;
+        /*int totalAge = 0;
         for (Person person : people) {
             totalAge += person.getAge();
         }
-        return (double) totalAge / people.size();
+        return (double) totalAge / people.size();*/
+        /*double sum = people.stream().map(Person::getAge).reduce(0, Integer::sum);
+        return sum / people.size();*/
+        return people.stream().mapToInt(Person::getAge).average().orElse(0);
     }
 
     private static int findOldestAge(List<Person> people) {
-        int maxAge = Integer.MIN_VALUE;
+        /*int maxAge = Integer.MIN_VALUE;
         for (Person person : people) {
             if (person.getAge() > maxAge) {
                 maxAge = person.getAge();
             }
         }
-        return maxAge;
+        return maxAge;*/
+        return people.stream().mapToInt(Person::getAge).max().orElse(0);
     }
 
     private static int findYoungestAge(List<Person> people) {
-        int minAge = Integer.MAX_VALUE;
+        /*int minAge = Integer.MAX_VALUE;
         for (Person person : people) {
             if (person.getAge() < minAge) {
                 minAge = person.getAge();
             }
         }
-        return minAge;
+        return minAge;*/
+        return people.stream().mapToInt(Person::getAge).min().orElse(0);
     }
 }
