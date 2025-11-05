@@ -26,9 +26,10 @@ public class Program {
                 person.getLastName().equalsIgnoreCase(searchName)).toList();
 
         System.out.println("People with matching name:");
-        for (Person person : matchingPeople) {
+        /*for (Person person : matchingPeople) {
             System.out.println(person.getFirstName() + " " + person.getLastName());
-        }
+        }*/
+        matchingPeople.forEach(person -> System.out.println(person.getFirstName() + " " + person.getLastName()));
 
         //int averageAge = calculateAverageAge(people);
         double averageAge = calculateAverageAge(people);
@@ -65,7 +66,7 @@ public class Program {
         }
         return (double) totalAge / people.size();*/
         /*double sum = people.stream().map(Person::getAge).reduce(0, Integer::sum);
-        return sum / people.size();*/
+        return (double) sum / people.size();*/
         return people.stream().mapToInt(Person::getAge).average().orElse(0);
     }
 
@@ -77,7 +78,7 @@ public class Program {
             }
         }
         return maxAge;*/
-        return people.stream().mapToInt(Person::getAge).max().orElse(0);
+        return people.stream().mapToInt(Person::getAge).max().orElse(-1);
     }
 
     private static int findYoungestAge(List<Person> people) {
@@ -88,6 +89,6 @@ public class Program {
             }
         }
         return minAge;*/
-        return people.stream().mapToInt(Person::getAge).min().orElse(0);
+        return people.stream().mapToInt(Person::getAge).min().orElse(-1);
     }
 }
